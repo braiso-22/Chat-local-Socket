@@ -4,9 +4,6 @@
  */
 package sockets;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
 
 /**
  *
@@ -20,9 +17,6 @@ public class Cliente {
     public static void main(String[] args) {
         // TODO code application logic here
         FrameCliente ventana1 = new FrameCliente();
-
-        
-
     }
 
 }

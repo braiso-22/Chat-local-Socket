@@ -6,6 +6,7 @@ package sockets;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -25,7 +26,7 @@ public class FrameServer extends javax.swing.JFrame implements Runnable {
         Thread h1 = new Thread(this);
         h1.start();
         this.setVisible(true);
-
+        
     }
 
     /**
@@ -109,20 +110,26 @@ public class FrameServer extends javax.swing.JFrame implements Runnable {
             }
         });
     }
-
+    
     @Override
     public void run() {
         try {
             ServerSocket socketServidor = new ServerSocket(9999);
             while (true) {
-
+                
                 Socket socketAbierto = socketServidor.accept();
                 DataInputStream flujoEntrada = new DataInputStream(socketAbierto.getInputStream());
                 String mensaje = flujoEntrada.readUTF();
                 areaDeTexto.append("\n" + mensaje);
             }
+        } catch (BindException bE) {
+            areaDeTexto.setText("Error: " + bE.getMessage() + "\nIntenta cerrar todas las ventanas de este programa y vuelve a entrar");
         } catch (IOException ex) {
             Logger.getLogger(FrameServer.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(Exception e){
+            System.out.println("No se que ha pasado");
+        }finally{
+            System.out.println("a");
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

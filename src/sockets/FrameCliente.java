@@ -89,6 +89,7 @@ public class FrameCliente extends javax.swing.JFrame implements Runnable {
     private void botonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEnviarActionPerformed
         Thread h1 = new Thread(this);
         h1.start();
+        
     }//GEN-LAST:event_botonEnviarActionPerformed
 
     /**
@@ -120,20 +121,19 @@ public class FrameCliente extends javax.swing.JFrame implements Runnable {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameCliente().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new FrameCliente().setVisible(true);
         });
     }
-
+    
     @Override
     public void run() {
         try {
             Socket socketCliente = new Socket("127.0.0.1", 9999);
-
+            
             try ( DataOutputStream flujoSalida = new DataOutputStream(socketCliente.getOutputStream())) {
                 flujoSalida.writeUTF(textoAEnviar.getText());
+                textoAEnviar.setText("");
             }
         } catch (IOException ex) {
             System.out.println("Error en la conexión: " + ex.getMessage());
